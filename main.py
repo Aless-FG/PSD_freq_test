@@ -108,12 +108,7 @@ for i in range(1, 22):
             flatness = calculate_spectral_flatness(psd_norm)
             flatness_norm = (flatness - np.min(flatness)) / (np.max(flatness) - np.min(flatness))
             matrix_feature[:, 10] = flatness_norm
-            """kurt = kurtosis(psd)
-            kurt_norm = (kurt - np.min(kurt)) / (np.max(kurt) - np.min(kurt))
-            matrix_feature[:, 11] = kurt_norm
-            skewness = skew(psd)
-            skewness_norm = (skewness - np.min(skewness)) / (np.max(skewness) - np.min(skewness))
-            matrix_feature[:, 11] = skewness_norm"""
+
 
 
             data_array[i - 1, j - 1, z, :, :] = matrix_feature[:, :]
