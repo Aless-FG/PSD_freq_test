@@ -38,7 +38,7 @@ for i in range(1, 22):
         rec_dataframe = pd.DataFrame(rec,
                                      columns=['COUNTER', 'INTERPOLATED', 'F3', 'FC5', 'AF3', 'F7', 'T7', 'P7', 'O1',
                                               'O2', 'P8', 'T8', 'F8', 'AF4', 'FC6', 'F4', 'UNIX_TIMESTAMP'])
-        sensors = ['F3', 'FC5', 'AF3', 'F7', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'F8', 'AF4', 'FC6', 'F4']
+        sensors = ['F3', 'FC5', 'AF3', 'F7', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'F8', 'AF4', 'FC6', 'F4'] # channels
         z = 0
         matrix_feature = np.zeros((370, 11))  # perchè 370 sono il numero di psd, 5 sono le features
         for sensor in sensors:
@@ -62,7 +62,7 @@ for i in range(1, 22):
             # Esempio di calcolo della TD-PSD su una sub-banda di frequenza utilizzando la finestra di Hamming
             f, t_psd, psd = signal.spectrogram(coeffs[0], fs, window='blackman', nperseg=fs, noverlap=int(fs / 4)
                                                )
-            psd_norm = sklearn.preprocessing.normalize(psd, axis=0)  # axis = 0 sono le frequenze
+            psd_norm = sklearn.preprocessing.normalize(psd, axis=0)  # normalization, axis = 0 sono le frequenze
             if len(psd_norm[0]) > 370:
                 psd_norm = psd_norm[:, :370]
             elif len(psd_norm[0]) < 370:
@@ -75,7 +75,7 @@ for i in range(1, 22):
             alpha_band = (8, 12)
             beta_band = (12, 30)
             gamma_band = (30, 100)
-
+            # --- features ---
             delta_power = np.sum(psd_norm[np.where(np.logical_and(f >= delta_band[0], f <= delta_band[1]))],
                                  axis=0)  # somma delle frequenze delta (tra 1 e 4, è la potenza)
             matrix_feature[:, 0] = delta_power  # aggiungo alla prima colonna
